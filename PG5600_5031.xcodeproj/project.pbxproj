@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2F8F1FDD234F2C21000384A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1FDC234F2C21000384A1 /* AppDelegate.swift */; };
-		2F8F1FDF234F2C21000384A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1FDE234F2C21000384A1 /* ViewController.swift */; };
 		2F8F1FE2234F2C21000384A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F8F1FE0234F2C21000384A1 /* Main.storyboard */; };
 		2F8F1FE5234F2C21000384A1 /* PG5600_5031.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1FE3234F2C21000384A1 /* PG5600_5031.xcdatamodeld */; };
 		2F8F1FE7234F2C22000384A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F8F1FE6234F2C22000384A1 /* Assets.xcassets */; };
 		2F8F1FEA234F2C22000384A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F8F1FE8234F2C22000384A1 /* LaunchScreen.storyboard */; };
 		2F8F1FF5234F2C22000384A1 /* PG5600_5031Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1FF4234F2C22000384A1 /* PG5600_5031Tests.swift */; };
+		2F8F2000234F4655000384A1 /* Top50ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1FFF234F4655000384A1 /* Top50ViewController.swift */; };
+		2F8F2002234F4B4F000384A1 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F2001234F4B4F000384A1 /* AlbumDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +30,6 @@
 /* Begin PBXFileReference section */
 		2F8F1FD9234F2C21000384A1 /* PG5600_5031.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PG5600_5031.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8F1FDC234F2C21000384A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2F8F1FDE234F2C21000384A1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2F8F1FE1234F2C21000384A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2F8F1FE4234F2C21000384A1 /* PG5600_5031.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PG5600_5031.xcdatamodel; sourceTree = "<group>"; };
 		2F8F1FE6234F2C22000384A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +38,8 @@
 		2F8F1FF0234F2C22000384A1 /* PG5600_5031Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PG5600_5031Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8F1FF4234F2C22000384A1 /* PG5600_5031Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PG5600_5031Tests.swift; sourceTree = "<group>"; };
 		2F8F1FF6234F2C22000384A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F8F1FFF234F4655000384A1 /* Top50ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top50ViewController.swift; sourceTree = "<group>"; };
+		2F8F2001234F4B4F000384A1 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,12 +82,13 @@
 			isa = PBXGroup;
 			children = (
 				2F8F1FDC234F2C21000384A1 /* AppDelegate.swift */,
-				2F8F1FDE234F2C21000384A1 /* ViewController.swift */,
 				2F8F1FE0234F2C21000384A1 /* Main.storyboard */,
 				2F8F1FE6234F2C22000384A1 /* Assets.xcassets */,
 				2F8F1FE8234F2C22000384A1 /* LaunchScreen.storyboard */,
 				2F8F1FEB234F2C22000384A1 /* Info.plist */,
 				2F8F1FE3234F2C21000384A1 /* PG5600_5031.xcdatamodeld */,
+				2F8F1FFF234F4655000384A1 /* Top50ViewController.swift */,
+				2F8F2001234F4B4F000384A1 /* AlbumDetailViewController.swift */,
 			);
 			path = PG5600_5031;
 			sourceTree = "<group>";
@@ -200,7 +203,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F8F1FDF234F2C21000384A1 /* ViewController.swift in Sources */,
+				2F8F2000234F4655000384A1 /* Top50ViewController.swift in Sources */,
+				2F8F2002234F4B4F000384A1 /* AlbumDetailViewController.swift in Sources */,
 				2F8F1FDD234F2C21000384A1 /* AppDelegate.swift in Sources */,
 				2F8F1FE5234F2C21000384A1 /* PG5600_5031.xcdatamodeld in Sources */,
 			);
