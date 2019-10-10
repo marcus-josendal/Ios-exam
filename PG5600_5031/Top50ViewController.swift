@@ -9,45 +9,34 @@
 import Foundation
 import UIKit
 
-class Top50ViewController : UIViewController {
+class Top50ViewController : UITableViewController {
     @IBOutlet weak var topNav: UINavigationItem!
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchTopAlbums()
+        
+        // NavigationController styling
+        navigationItem.title = "Top 50 Albums"
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.barTintColor = UIColor(named: "lightBlack")
+        
+        print(fetchTopAlbums())
     }
     
-    @IBAction func myButton(_ sender: UIButton) {
-        if let VC = (self.storyboard?.instantiateViewController(withIdentifier: "AlbumDetailViewController")) as? AlbumDetailViewController
-        {
-            VC.albumKey = "123"
-            self.navigationController?.pushViewController(VC, animated: true)
-        }
-    }
     
-    func fetchTopAlbums() -> Void {
+    func fetchTopAlbums() -> [Album] {
         let urlSession = URLSession.shared
         let url = URL.init(string: "https://theaudiodb.com/api/v1/json/1/mostloved.php?format=album")!
-        
+        var albums: [Album]? = nil
         let task = urlSession.dataTask(with: url) { (data, response, error) in
-            if let data = data {
-                // This line so I can read the line
-                let responseString = String.init(data: data, encoding: String.Encoding.utf8)
+            do {
                 let decoder = JSONDecoder.init()
-                
-                let todoObject = try! decoder.decode(LovedResponse.self, from: data)
-                
-        
-                
-                // Update UI - have to do this on main thread
-//                DispatchQueue.main.async {
-//                    self.jsonLabel.text = todoObject.title
-//                }
-                
-            } else if let error = error {
+                let todoObject = try decoder.decode(LovedResponse.self, from: data!)
+                albums = todoObject.loved
+            } catch {
                 print(error)
             }
         }
-        
         task.resume()
+        return albums ?? []
     }
 }

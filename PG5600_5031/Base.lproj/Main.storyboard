@@ -43,37 +43,6 @@
             </objects>
             <point key="canvasLocation" x="-416" y="59"/>
         </scene>
-        <!--Top50 View Controller-->
-        <scene sceneID="yTn-qz-ckv">
-            <objects>
-                <viewController id="tUm-a3-o03" customClass="Top50ViewController" customModule="PG5600_5031" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8l7-OP-Hlk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fnr-Ai-J8M">
-                                <rect key="frame" x="184" y="433" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="myButton:" destination="tUm-a3-o03" eventType="touchUpInside" id="Rka-DG-Isw"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.0039215686269999999" green="0.15686274510000001" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <viewLayoutGuide key="safeArea" id="cVD-qC-p5u"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="eUw-Sm-HGw"/>
-                    <connections>
-                        <outlet property="topNav" destination="eUw-Sm-HGw" id="3Jk-Y4-oQM"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8qm-oB-HUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2214" y="798"/>
-        </scene>
         <!--Album Detail View Controller-->
         <scene sceneID="i4q-fv-3Dp">
             <objects>
@@ -131,12 +100,41 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="tUm-a3-o03" kind="relationship" relationship="rootViewController" id="fvX-Ls-JTL"/>
+                        <segue destination="E5K-bq-nW0" kind="relationship" relationship="rootViewController" id="glB-Sa-FlD"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z0N-Jf-Yz2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2214" y="59"/>
+        </scene>
+        <!--Top50 View Controller-->
+        <scene sceneID="OkI-sP-7Aa">
+            <objects>
+                <tableViewController id="E5K-bq-nW0" customClass="Top50ViewController" customModule="PG5600_5031" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="f8a-Pk-C1E">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Z0N-Xf-rmE">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z0N-Xf-rmE" id="sGm-Io-hcv">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="E5K-bq-nW0" id="LBb-3p-t5Q"/>
+                            <outlet property="delegate" destination="E5K-bq-nW0" id="JSW-py-KlC"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="tLy-ZB-wo0"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aXI-3v-i2g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2214" y="733"/>
         </scene>
     </scenes>
     <resources>
