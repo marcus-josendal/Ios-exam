@@ -24,23 +24,24 @@ class Top50ViewController : UIViewController {
         }
     }
     
-    func fetchTopAlbums() -> String {
+    func fetchTopAlbums() -> Void {
         let urlSession = URLSession.shared
-        let url = URL.init(string: "https://jsonplaceholder.typicode.com/todos/1")!
+        let url = URL.init(string: "https://theaudiodb.com/api/v1/json/1/mostloved.php?format=album")!
         
         let task = urlSession.dataTask(with: url) { (data, response, error) in
             if let data = data {
                 // This line so I can read the line
-                // let responseString = String.init(data: data, encoding: String.Encoding.utf8)
+                let responseString = String.init(data: data, encoding: String.Encoding.utf8)
                 let decoder = JSONDecoder.init()
                 
-                // Actually decoding
-                let todoObject = try! decoder.decode(Todo.self, from: data)
+                let todoObject = try! decoder.decode(LovedResponse.self, from: data)
+                
+        
                 
                 // Update UI - have to do this on main thread
-                DispatchQueue.main.async {
-                    self.jsonLabel.text = todoObject.title
-                }
+//                DispatchQueue.main.async {
+//                    self.jsonLabel.text = todoObject.title
+//                }
                 
             } else if let error = error {
                 print(error)
