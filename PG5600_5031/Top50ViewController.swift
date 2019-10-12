@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 
 class Top50ViewController : UITableViewController {
+    @IBOutlet var albumTableView: UITableView!
     @IBOutlet weak var topNav: UINavigationItem!
+    private var albums = [Album]()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,24 +21,51 @@ class Top50ViewController : UITableViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.barTintColor = UIColor(named: "lightBlack")
         
-        print(fetchTopAlbums())
+        // Fetch JSON and reload the tableview
+        fetchTopAlbums { (res) in
+            switch res {
+            case .success(let albums):
+                self.albums = albums
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let err):
+                print("Failed to fetch albums", err)
+            }
+        }
+    }
+    
+    /*
+        Fetches top 50 albums from API. To implement handle callback given from method.
+    */
+    fileprivate func fetchTopAlbums(completion: @escaping (Result<[Album], Error>) -> ()) {
+        let urlString = "https://theaudiodb.com/api/v1/json/1/mostloved.php?format=album"
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+            if let err = err {
+                completion(.failure(err))
+                return
+            }
+            
+            do {
+                let albums = try JSONDecoder().decode(LovedResponse.self, from: data!)
+                completion(.success(albums.loved))
+            } catch let jsonError {
+                completion(.failure(jsonError))
+            }
+        }.resume()
     }
     
     
-    func fetchTopAlbums() -> [Album] {
-        let urlSession = URLSession.shared
-        let url = URL.init(string: "https://theaudiodb.com/api/v1/json/1/mostloved.php?format=album")!
-        var albums: [Album]? = nil
-        let task = urlSession.dataTask(with: url) { (data, response, error) in
-            do {
-                let decoder = JSONDecoder.init()
-                let todoObject = try decoder.decode(LovedResponse.self, from: data!)
-                albums = todoObject.loved
-            } catch {
-                print(error)
-            }
-        }
-        task.resume()
-        return albums ?? []
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return albums.count
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath)
+        cell.textLabel?.text = self.albums[indexPath.row].strArtist
+        return cell
     }
 }
