@@ -45,7 +45,6 @@ class Top50ViewController : UITableViewController {
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             if let err = err {
                 completion(.failure(err))
-                return
             }
             
             do {
@@ -64,8 +63,10 @@ class Top50ViewController : UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath)
-        cell.textLabel?.text = self.albums[indexPath.row].strArtist
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as? AlbumTableViewCell
+        
+        cell?.albumName.text = self.albums[indexPath.row].strAlbum
+        //cell.textLabel?.text = self.albums[indexPath.row].strArtist
+        return cell!
     }
 }
