@@ -12,6 +12,7 @@ import UIKit
 class AlbumTableViewCell : UITableViewCell {
     @IBOutlet weak var albumName: UILabel!
     @IBOutlet weak var albumCoverImage: UIImageView!
+    @IBOutlet weak var artistName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

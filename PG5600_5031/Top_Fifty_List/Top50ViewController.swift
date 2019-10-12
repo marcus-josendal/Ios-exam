@@ -35,13 +35,12 @@ class Top50ViewController : UITableViewController {
         }
     }
     
-    /*
-        Fetches top 50 albums from API. To implement handle callback given from method.
-    */
+
     fileprivate func fetchTopAlbums(completion: @escaping (Result<[Album], Error>) -> ()) {
         let urlString = "https://theaudiodb.com/api/v1/json/1/mostloved.php?format=album"
         guard let url = URL(string: urlString) else { return }
         
+        // Fetches album-JSON data
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             if let err = err {
                 completion(.failure(err))
@@ -63,10 +62,23 @@ class Top50ViewController : UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Set album name and album artist
         let cell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as? AlbumTableViewCell
-        
         cell?.albumName.text = self.albums[indexPath.row].strAlbum
-        //cell.textLabel?.text = self.albums[indexPath.row].strArtist
+        cell?.artistName.text = self.albums[indexPath.row].strArtist
+        
+        // Sets the UITableView.image to the image from the API
+        if let url = URL(string: self.albums[indexPath.row].strAlbumThumb) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url)
+                if let data = data {
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        cell?.albumCoverImage.image = image
+                    }
+                }
+            }
+        }
         return cell!
     }
 }
