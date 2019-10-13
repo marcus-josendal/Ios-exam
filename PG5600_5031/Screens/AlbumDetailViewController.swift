@@ -12,10 +12,13 @@ import UIKit
 class AlbumDetailViewController : UIViewController {
     var album: Album?
     var tracks: [Track]?
-    @IBOutlet weak var myLabel: UILabel!
+    @IBOutlet weak var albumCover: UIImageView!
+    @IBOutlet weak var albumName: UILabel!
+    @IBOutlet weak var albumArtist: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Fetch data related to album
         fetchTracks { (res) in
             switch res {
             case .success(let tracks):
@@ -25,6 +28,12 @@ class AlbumDetailViewController : UIViewController {
                 print("Failed to fetch tracks", err)
             }
         }
+        
+        // Styling and giving UI-components data
+        albumCover.image = UIImage(named: "album-placeholder")
+        albumName.text = self.album!.strAlbum
+        albumName.font = UIFont.boldSystemFont(ofSize: 25.0)
+        albumArtist.text = "Released by " + self.album!.strArtist + " in " + self.album!.intYearReleased
     }
     
     fileprivate func fetchTracks(completion: @escaping (Result<[Track], Error>) -> ()) {
@@ -47,6 +56,15 @@ class AlbumDetailViewController : UIViewController {
     }
     
     func fetchAlbumCoverImage() {
-        
+        if let url = URL(string: (self.album!.strAlbumThumb)) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url)
+                if let data = data {
+                    DispatchQueue.main.async {
+                        self.albumCover.image = UIImage(data: data)
+                    }
+                }
+            }
+        }
     }
 }

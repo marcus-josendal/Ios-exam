@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -51,24 +52,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UeQ-og-zwp">
-                                <rect key="frame" x="186" y="438" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8K1-e4-8u5">
+                                <rect key="frame" x="0.0" y="44" width="414" height="339"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="8K1-e4-8u5" secondAttribute="height" multiplier="138:113" id="e2j-cM-vp1"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPJ-YP-mcL">
+                                <rect key="frame" x="20" y="409" width="44" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FmA-Uu-FR2">
+                                <rect key="frame" x="20" y="441" width="122" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="lightBlack"/>
+                        <constraints>
+                            <constraint firstItem="FmA-Uu-FR2" firstAttribute="top" secondItem="KPJ-YP-mcL" secondAttribute="bottom" constant="8" id="974-Nv-mX8"/>
+                            <constraint firstItem="KPJ-YP-mcL" firstAttribute="leading" secondItem="td1-Qd-a5X" secondAttribute="leading" constant="20" id="Ajs-dX-Mdg"/>
+                            <constraint firstItem="8K1-e4-8u5" firstAttribute="top" secondItem="td1-Qd-a5X" secondAttribute="top" id="hbE-Ix-4wd"/>
+                            <constraint firstItem="8K1-e4-8u5" firstAttribute="trailing" secondItem="td1-Qd-a5X" secondAttribute="trailing" id="hie-T0-nMF"/>
+                            <constraint firstItem="FmA-Uu-FR2" firstAttribute="leading" secondItem="td1-Qd-a5X" secondAttribute="leading" constant="20" id="mOO-BZ-32p"/>
+                            <constraint firstItem="KPJ-YP-mcL" firstAttribute="top" secondItem="8K1-e4-8u5" secondAttribute="bottom" constant="26" id="pnO-08-IQe"/>
+                            <constraint firstItem="8K1-e4-8u5" firstAttribute="leading" secondItem="td1-Qd-a5X" secondAttribute="leading" id="rlB-pe-cqQ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="td1-Qd-a5X"/>
                     </view>
                     <connections>
-                        <outlet property="myLabel" destination="UeQ-og-zwp" id="92Y-Vx-mXb"/>
+                        <outlet property="albumArtist" destination="FmA-Uu-FR2" id="sVE-Ia-VsE"/>
+                        <outlet property="albumCover" destination="8K1-e4-8u5" id="0iG-jz-m8c"/>
+                        <outlet property="albumName" destination="KPJ-YP-mcL" id="Ir4-qg-eKc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="png-KY-ISe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2214" y="1442"/>
+            <point key="canvasLocation" x="-2214.4927536231885" y="1441.7410714285713"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="c9e-bO-E7Z">
@@ -133,7 +156,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cai-D2-GiO">
                                             <rect key="frame" x="131" y="36" width="218" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="srW-JQ-VJJ">
@@ -143,10 +166,11 @@
                                                 <constraint firstAttribute="width" constant="204" id="mPM-1g-BWa"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" name="lightBlack"/>
                                     <constraints>
                                         <constraint firstItem="cai-D2-GiO" firstAttribute="top" secondItem="sGm-Io-hcv" secondAttribute="topMargin" constant="25" id="FsU-qA-alX"/>
                                         <constraint firstItem="srW-JQ-VJJ" firstAttribute="top" secondItem="cai-D2-GiO" secondAttribute="bottom" constant="8" id="JSg-vQ-zBH"/>
@@ -178,6 +202,9 @@
     </scenes>
     <resources>
         <image name="icons8-maximum_speed" width="25" height="25"/>
+        <namedColor name="lightBlack">
+            <color red="0.12549019607843137" green="0.12549019607843137" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
