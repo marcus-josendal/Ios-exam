@@ -21,6 +21,7 @@ class Top50ViewController : UITableViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.barTintColor = UIColor(named: "lightBlack")
         
+        
         // Fetch JSON and reload the tableview
         fetchTopAlbums { (res) in
             switch res {
@@ -69,16 +70,22 @@ class Top50ViewController : UITableViewController {
         
         // Sets the UITableView.image to the image from the API
         if let url = URL(string: self.albums[indexPath.row].strAlbumThumb) {
+            cell?.albumCoverImage.image = nil
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url)
                 if let data = data {
-                    let image = UIImage(data: data)
                     DispatchQueue.main.async {
-                        cell?.albumCoverImage.image = image
+                        cell?.albumCoverImage.image = UIImage(data: data)
                     }
                 }
             }
         }
         return cell!
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "AlbumDetailViewController") as? AlbumDetailViewController
+        vc?.album = self.albums[indexPath.row]
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 }

@@ -10,10 +10,11 @@ import Foundation
 import UIKit
 
 class AlbumDetailViewController : UIViewController {
-    var albumKey = ""
+    var album: Album?
     @IBOutlet weak var myLabel: UILabel!
     override func viewDidLoad() {
+        myLabel.text = album?.strAlbum
+        print(self.album)
         super.viewDidLoad()
-        myLabel.text = albumKey
     }
 }

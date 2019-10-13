@@ -87,7 +87,8 @@
 		2F8F1FDB234F2C21000384A1 /* PG5600_5031 */ = {
 			isa = PBXGroup;
 			children = (
-				2FD84C912352248900AE0C89 /* Top_Fifty_List */,
+				2FC6C41D2353801600BDE85A /* Components */,
+				2FD84C912352248900AE0C89 /* Screens */,
 				2F8F2003234F6037000384A1 /* Types */,
 				2F8F1FDC234F2C21000384A1 /* AppDelegate.swift */,
 				2F8F1FE0234F2C21000384A1 /* Main.storyboard */,
@@ -95,7 +96,6 @@
 				2F8F1FE8234F2C22000384A1 /* LaunchScreen.storyboard */,
 				2F8F1FEB234F2C22000384A1 /* Info.plist */,
 				2F8F1FE3234F2C21000384A1 /* PG5600_5031.xcdatamodeld */,
-				2F8F2001234F4B4F000384A1 /* AlbumDetailViewController.swift */,
 			);
 			path = PG5600_5031;
 			sourceTree = "<group>";
@@ -118,13 +118,21 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
-		2FD84C912352248900AE0C89 /* Top_Fifty_List */ = {
+		2FC6C41D2353801600BDE85A /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				2F8F200C23521B84000384A1 /* AlbumTableViewCell.swift */,
-				2F8F1FFF234F4655000384A1 /* Top50ViewController.swift */,
 			);
-			path = Top_Fifty_List;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		2FD84C912352248900AE0C89 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				2F8F1FFF234F4655000384A1 /* Top50ViewController.swift */,
+				2F8F2001234F4B4F000384A1 /* AlbumDetailViewController.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
