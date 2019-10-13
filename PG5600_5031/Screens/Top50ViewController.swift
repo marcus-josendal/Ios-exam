@@ -67,10 +67,10 @@ class Top50ViewController : UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as? AlbumTableViewCell
         cell?.albumName.text = self.albums[indexPath.row].strAlbum
         cell?.artistName.text = self.albums[indexPath.row].strArtist
+        cell?.albumCoverImage.image = UIImage(named: "album-placeholder")
         
         // Sets the UITableView.image to the image from the API
         if let url = URL(string: self.albums[indexPath.row].strAlbumThumb) {
-            cell?.albumCoverImage.image = nil
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url)
                 if let data = data {
