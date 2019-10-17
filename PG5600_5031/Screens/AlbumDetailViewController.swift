@@ -12,7 +12,7 @@ import UIKit
 class AlbumDetailViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var album: Album?
-    var tracks: [Track]?
+    var tracks = [Track]()
     @IBOutlet weak var albumCover: UIImageView!
     @IBOutlet weak var albumName: UILabel!
     @IBOutlet weak var albumArtist: UILabel!
@@ -26,7 +26,9 @@ class AlbumDetailViewController : UIViewController, UITableViewDelegate, UITable
             case .success(let tracks):
                 self.tracks = tracks
                 self.fetchAlbumCoverImage()
-                self.tracksTable.reloadData()
+                DispatchQueue.main.async {
+                    self.tracksTable.reloadData()
+                }
             case .failure(let err):
                 print("Failed to fetch tracks", err)
             }
@@ -59,16 +61,6 @@ class AlbumDetailViewController : UIViewController, UITableViewDelegate, UITable
         }.resume()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath)
-        cell.textLabel?.text = "hello"
-        return cell
-    }
-    
     func fetchAlbumCoverImage() {
         if let url = URL(string: (self.album!.strAlbumThumb)) {
             DispatchQueue.global().async {
@@ -80,5 +72,16 @@ class AlbumDetailViewController : UIViewController, UITableViewDelegate, UITable
                 }
             }
         }
+    }
+    
+    /* METHODS FOR TRACKS TABLE VIEW BELOW */
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.tracks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath)
+        return cell
     }
 }
