@@ -1,22 +1,22 @@
 //
-//  AlbumDetailViewController.swift
+//  DetailAlbumViewController.swift
 //  PG5600_5031
 //
-//  Created by Marcus Jøsendal on 10/10/2019.
+//  Created by Marcus Jøsendal on 23/10/2019.
 //  Copyright © 2019 Marcus Jøsendal. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class AlbumDetailViewController : UITableViewController {
-    
+class DetailAlbumViewController : UITableViewController {
     var album: Album?
     var tracks = [Track]()
-    //@IBOutlet weak var albumCover: UIImageView!
-    //@IBOutlet weak var albumName: UILabel!
-    //@IBOutlet weak var albumArtist: UILabel!
-    @IBOutlet weak var tracksTable: UITableView!
+    @IBOutlet var tracksTable: UITableView!
+    @IBOutlet weak var albumCover: UIImageView!
+    @IBOutlet weak var albumInfo: UILabel!
+    @IBOutlet weak var albumReleaseYear: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,7 +25,7 @@ class AlbumDetailViewController : UITableViewController {
             switch res {
             case .success(let tracks):
                 self.tracks = tracks
-                //self.fetchAlbumCoverImage()
+                self.fetchAlbumCoverImage()
                 DispatchQueue.main.async {
                     self.tracksTable.reloadData()
                 }
@@ -33,13 +33,9 @@ class AlbumDetailViewController : UITableViewController {
                 print("Failed to fetch tracks", err)
             }
         }
-        
-        // Styling and giving UI-components data
-        //albumCover.image = UIImage(named: "album-placeholder")
-        //albumName.text = self.album!.strAlbum
-        //albumName.font = UIFont.boldSystemFont(ofSize: 25.0)
-        //albumArtist.text = "Released by " + self.album!.strArtist + " in " + self.album!.intYearReleased
-
+        self.albumCover.image = UIImage(named: "album-placeholder")
+        self.albumInfo?.text = album?.strAlbum
+        self.albumReleaseYear?.text = album?.intYearReleased
     }
     
     fileprivate func fetchTracks(completion: @escaping (Result<[Track], Error>) -> ()) {
@@ -67,7 +63,7 @@ class AlbumDetailViewController : UITableViewController {
                 let data = try? Data(contentsOf: url)
                 if let data = data {
                     DispatchQueue.main.async {
-                        //self.albumCover.image = UIImage(data: data)
+                        self.albumCover.image = UIImage(data: data)
                     }
                 }
             }
@@ -83,6 +79,7 @@ class AlbumDetailViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath)
+        cell.textLabel?.text = self.tracks[indexPath.row].strTrack
         return cell
     }
 }

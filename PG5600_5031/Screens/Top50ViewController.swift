@@ -84,7 +84,7 @@ class Top50ViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "AlbumDetailViewController") as? AlbumDetailViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailAlbumViewController") as? DetailAlbumViewController
         vc?.album = self.albums[indexPath.row]
         self.navigationController?.pushViewController(vc!, animated: true)
     }
