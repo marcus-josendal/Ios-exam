@@ -71,15 +71,20 @@ class DetailAlbumViewController : UITableViewController {
     }
     
     /* METHODS FOR TRACKS TABLE VIEW BELOW */
-    
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tracks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath)
-        cell.textLabel?.text = self.tracks[indexPath.row].strTrack
+        if(indexPath.row == 0) {
+            let firstCell = tableView.dequeueReusableCell(withIdentifier: "trackHeadlineCell", for: indexPath)
+            firstCell.textLabel?.text = "Album Tracks"
+            firstCell.textLabel?.textColor = .white
+            firstCell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
+            return firstCell
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackTableViewCell
+        cell.trackName.text = self.tracks[indexPath.row].strTrack
         return cell
     }
 }
