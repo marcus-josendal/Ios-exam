@@ -18,12 +18,12 @@ struct Album: Codable {
     let strArtist: String
     let strArtistStripped: String
     let intYearReleased: String
-    let strStyle: String
-    let strGenre: String
+    let strStyle: String?
+    let strGenre: String?
     let strLabel: String?
     let strReleaseFormat: String
-    let intSales: String
-    let strAlbumThumb: String
+    let intSales: String?
+    let strAlbumThumb: String?
     let strAlbumThumbHQ: String?
     let strAlbumThumbBack: String?
     let strAlbumCDart: String?
@@ -47,9 +47,9 @@ struct Album: Codable {
     let strDescriptionNO: String?
     let strDescriptionIL: String?
     let strDescriptionPL: String?
-    let intLoved: String
-    let intScore: String
-    let intScoreVotes: String
+    let intLoved: String?
+    let intScore: String?
+    let intScoreVotes: String?
     let strReview: String?
     let strMood: String?
     let strTheme: String?
@@ -68,5 +68,5 @@ struct Album: Codable {
     let strMusicMozID: String?
     let strItunesID: String?
     let strAmazonID: String?
-    let strLocked: String
+    let strLocked: String?
 }

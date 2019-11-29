@@ -1,0 +1,6 @@
+module Pods_PG5600_5031 {
+  umbrella header "Pods-PG5600_5031-umbrella.h"
+
+  export *
+  module * { export * }
+}

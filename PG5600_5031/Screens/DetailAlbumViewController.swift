@@ -58,7 +58,7 @@ class DetailAlbumViewController : UITableViewController {
     }
     
     func fetchAlbumCoverImage() {
-        if let url = URL(string: (self.album!.strAlbumThumb)) {
+        if let url = URL(string: (self.album!.strAlbumThumb ?? "")) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url)
                 if let data = data {
@@ -85,6 +85,8 @@ class DetailAlbumViewController : UITableViewController {
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackTableViewCell
         cell.trackName.text = self.tracks[indexPath.row].strTrack
+        
+        cell.trackDuration.text = cell.convertToTimestamp(time: Int(self.tracks[indexPath.row].intDuration)!)
         return cell
     }
 }
