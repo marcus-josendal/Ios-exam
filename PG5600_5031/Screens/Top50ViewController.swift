@@ -13,7 +13,10 @@ import Kingfisher
 class Top50ViewController : UITableViewController {
     @IBOutlet var albumTableView: UITableView!
     @IBOutlet weak var topNav: UINavigationItem!
+    @IBOutlet weak var displaySwitch: UISegmentedControl!
     private var albums = [Album]()
+    private var alternateCellView = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,7 +24,7 @@ class Top50ViewController : UITableViewController {
         navigationItem.title = "Top 50 Albums"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.barTintColor = UIColor(named: "lightBlack")
-        
+
         
         // Fetch JSON and reload the tableview
         fetchTopAlbums { (res) in
@@ -57,6 +60,12 @@ class Top50ViewController : UITableViewController {
         }.resume()
     }
     
+    @IBAction func displayChanged(_ sender: Any) {
+        self.alternateCellView = !alternateCellView
+        self.tableView.rowHeight = alternateCellView ? 50 : 100
+        DispatchQueue.main.async { self.tableView.reloadData() }
+    }
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return albums.count
@@ -65,15 +74,25 @@ class Top50ViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Set album name and album artist
-        let cell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as? AlbumTableViewCell
         let cellData = self.albums[indexPath.row]
-        cell?.albumName.text = cellData.strAlbum
-        cell?.artistName.text = cellData.strArtist
-        
-        // Sets the UITableView.image to the image from the API
-        let url = cellData.strAlbumThumb
-        cell?.albumCoverImage.kf.setImage(with: URL(string: url ?? ""), placeholder: UIImage(named: "album-placeholder"), options: [.transition(.fade(0.5))], progressBlock: nil)
-        return cell!
+        if(!alternateCellView) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as? AlbumTableViewCell
+            cell?.albumName.text = cellData.strAlbum
+            cell?.artistName.text = cellData.strArtist
+            
+            // Sets the UITableView.image to the image from the API
+            let url = cellData.strAlbumThumb
+            cell?.albumCoverImage.kf.setImage(with: URL(string: url ?? ""),
+                                              placeholder: UIImage(named: "album-placeholder"),
+                                              options: [.transition(.fade(0.5))],
+                                              progressBlock: nil)
+            return cell!
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "alternateAlbumCell", for: indexPath) as? AlternateAlbumTableViewCell
+            cell?.albumName.text = "\(indexPath.row + 1). \(cellData.strAlbum)"
+            cell?.artistName.text = cellData.strArtist
+            return cell!
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
