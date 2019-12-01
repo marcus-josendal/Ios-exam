@@ -164,7 +164,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eN-Il-LLD">
-                                    <rect key="frame" x="146" y="425" width="122" height="18"/>
+                                    <rect key="frame" x="57" y="425" width="300" height="18"/>
                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -175,11 +175,11 @@
                                 <constraint firstItem="Cre-Ii-DJ9" firstAttribute="top" secondItem="443-7v-o7d" secondAttribute="bottom" constant="14" id="7aK-3b-l4c"/>
                                 <constraint firstAttribute="trailing" secondItem="443-7v-o7d" secondAttribute="trailing" id="8sD-N3-cmX"/>
                                 <constraint firstItem="2eN-Il-LLD" firstAttribute="top" secondItem="Cre-Ii-DJ9" secondAttribute="bottom" constant="4" id="Glm-Yi-PfQ"/>
-                                <constraint firstAttribute="trailing" secondItem="2eN-Il-LLD" secondAttribute="trailing" constant="146" id="Mhp-Ps-CwY"/>
                                 <constraint firstItem="443-7v-o7d" firstAttribute="top" secondItem="ayP-Ud-DeG" secondAttribute="top" id="Nqm-Ab-4Es"/>
-                                <constraint firstItem="2eN-Il-LLD" firstAttribute="leading" secondItem="ayP-Ud-DeG" secondAttribute="leading" constant="146" id="QP8-ks-AeD"/>
+                                <constraint firstAttribute="trailing" secondItem="2eN-Il-LLD" secondAttribute="trailing" constant="57" id="Ppi-zm-wK1"/>
                                 <constraint firstAttribute="trailing" secondItem="Cre-Ii-DJ9" secondAttribute="trailing" constant="17" id="TEH-uF-mXc"/>
                                 <constraint firstItem="443-7v-o7d" firstAttribute="leading" secondItem="ayP-Ud-DeG" secondAttribute="leading" id="UWk-3f-Q23"/>
+                                <constraint firstItem="2eN-Il-LLD" firstAttribute="leading" secondItem="ayP-Ud-DeG" secondAttribute="leading" constant="57" id="ebI-wJ-D9f"/>
                                 <constraint firstItem="Cre-Ii-DJ9" firstAttribute="leading" secondItem="ayP-Ud-DeG" secondAttribute="leading" constant="17" id="rLa-To-kcb"/>
                             </constraints>
                         </view>
@@ -212,10 +212,17 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3H-Tl-rBk">
+                                            <rect key="frame" x="338" y="6.5" width="46" height="30.5"/>
+                                            <state key="normal" title="Button"/>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="GNH-de-ZUK" secondAttribute="bottom" constant="3" id="20w-ik-oEi"/>
+                                        <constraint firstAttribute="bottom" secondItem="y3H-Tl-rBk" secondAttribute="bottom" constant="6.5" id="5xq-h2-t0z"/>
+                                        <constraint firstAttribute="trailing" secondItem="y3H-Tl-rBk" secondAttribute="trailing" constant="30" id="E0u-rX-aEP"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="im6-4M-toi" secondAttribute="bottom" constant="3" id="GwO-G4-SI0"/>
+                                        <constraint firstItem="y3H-Tl-rBk" firstAttribute="top" secondItem="7g4-m3-m6N" secondAttribute="top" constant="6.5" id="K8G-j7-GCx"/>
                                         <constraint firstItem="GNH-de-ZUK" firstAttribute="leading" secondItem="im6-4M-toi" secondAttribute="trailing" constant="10" id="Ux3-Sx-yTw"/>
                                         <constraint firstItem="im6-4M-toi" firstAttribute="leading" secondItem="7g4-m3-m6N" secondAttribute="leadingMargin" id="e5K-eV-cbW"/>
                                         <constraint firstItem="GNH-de-ZUK" firstAttribute="top" secondItem="7g4-m3-m6N" secondAttribute="topMargin" constant="3" id="iko-qT-P15"/>
@@ -224,6 +231,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" name="lightBlack"/>
                                 <connections>
+                                    <outlet property="starButton" destination="y3H-Tl-rBk" id="0Ps-XY-pfR"/>
                                     <outlet property="trackDuration" destination="GNH-de-ZUK" id="pUb-Bt-ZBd"/>
                                     <outlet property="trackName" destination="im6-4M-toi" id="dzE-Ou-bqf"/>
                                 </connections>

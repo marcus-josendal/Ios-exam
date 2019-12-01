@@ -16,7 +16,7 @@ class DetailAlbumViewController : UITableViewController {
     @IBOutlet weak var albumCover: UIImageView!
     @IBOutlet weak var albumInfo: UILabel!
     @IBOutlet weak var albumReleaseYear: UILabel!
-    
+    @IBOutlet weak var artistName: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,7 +35,7 @@ class DetailAlbumViewController : UITableViewController {
         }
         self.albumCover.image = UIImage(named: "album-placeholder")
         self.albumInfo?.text = album?.strAlbum
-        self.albumReleaseYear?.text = album?.intYearReleased
+        self.albumReleaseYear?.text = "\(album?.intYearReleased as! String) - \(album?.strArtist as! String)"
     }
     
     fileprivate func fetchTracks(completion: @escaping (Result<[Track], Error>) -> ()) {

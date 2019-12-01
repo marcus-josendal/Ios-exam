@@ -13,13 +13,38 @@ class TrackTableViewCell : UITableViewCell {
     
     @IBOutlet weak var trackName: UILabel!
     @IBOutlet weak var trackDuration: UILabel!
+    @IBOutlet weak var starButton: UIButton!
     
+    let nonFilledStar = UIImage(named: "icons8-star")?.withRenderingMode(.alwaysTemplate)
+    let tintedFilledStar = UIImage(named: "icons8-star_filled")?.withRenderingMode(.alwaysTemplate)
+    var isFavorite: Bool = false
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        checkIfFavorite()
+        self.isFavorite = true
+        starButton.addTarget(self, action: #selector(addFavorite), for: .touchUpInside)
+        starButton.setImage(nonFilledStar, for: .normal)
+        starButton.setTitle(nil, for: .normal)
+        starButton.tintColor = UIColor(named: "custom_gold")
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    func checkIfFavorite() {
+        // self.isSelected = true
+    }
+    
+    @objc func addFavorite(_ sender: UIButton) {
+        self.isFavorite = !self.isFavorite
+        if(self.isFavorite) {
+            starButton.setImage(self.tintedFilledStar, for: .normal)
+        } else {
+            starButton.setImage(self.nonFilledStar, for: .normal)
+        }
+    }
+    
+    func setFavoriteImage() {
+        
     }
     
     func convertToTimestamp(time: Int) -> String {
