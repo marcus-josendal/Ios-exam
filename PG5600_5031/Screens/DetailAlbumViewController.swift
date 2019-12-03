@@ -56,11 +56,11 @@ class DetailAlbumViewController : UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         getFavoriteTracks()
-        self.tracksTable.reloadData()
+        tracksTable.reloadData()
     }
     
     fileprivate func fetchTracks(completion: @escaping (Result<[Track], Error>) -> ()) {
-        let urlString = "https://theaudiodb.com/api/v1/json/1/track.php?m=" + self.album!.idAlbum
+        let urlString = "https://theaudiodb.com/api/v1/json/1/track.php?m=" + album!.idAlbum
         guard let url = URL(string: urlString) else { return }
         
         // Fetches album-JSON data
@@ -90,7 +90,7 @@ class DetailAlbumViewController : UITableViewController {
     }
     
     func fetchAlbumCoverImage() {
-        if let url = URL(string: (self.album!.strAlbumThumb ?? "")) {
+        if let url = URL(string: (self.album!.strAlbumThumb!)) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url)
                 if let data = data {
@@ -111,13 +111,22 @@ class DetailAlbumViewController : UITableViewController {
             return firstCell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackTableViewCell
-        let trackData = self.tracks[indexPath.row]
+        let trackData = tracks[indexPath.row]
+        cell.orderId = getOrderId()
         cell.trackId = trackData.idTrack
         cell.artistName = trackData.strArtist
         cell.trackName.text = trackData.strTrack
         cell.trackDuration.text = cell.convertToTimestamp(time: Int(trackData.intDuration)!)
         cell.isFavorite = self.favoriteTracks.contains(where: { $0.trackName == trackData.strTrack })
         return cell
+    }
+    
+    func getOrderId() -> Int32 {
+        if(self.favoriteTracks.count == 0) {
+            return 0
+        } else {
+            return self.favoriteTracks.map { track in track.orderId}.max()! + 1
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

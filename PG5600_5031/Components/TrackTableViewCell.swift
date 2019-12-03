@@ -23,6 +23,7 @@ class TrackTableViewCell : UITableViewCell {
     var isFavorite: Bool = false
     var artistName: String?
     var trackId: String?
+    var orderId: Int32?
     
     /* CoreData */
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -94,7 +95,7 @@ class TrackTableViewCell : UITableViewCell {
         let favoriteTrack = FavoriteTrack(context: self.context!)
         favoriteTrack.duration = trackDuration?.text
         favoriteTrack.trackName = trackName?.text
-        favoriteTrack.orderId = 0
+        favoriteTrack.orderId = orderId!
         favoriteTrack.trackId = trackId
         favoriteTrack.artistName = artistName
         
@@ -105,6 +106,7 @@ class TrackTableViewCell : UITableViewCell {
             print(error)
         }
     }
+    
     
     
     func convertToTimestamp(time: Int) -> String {
