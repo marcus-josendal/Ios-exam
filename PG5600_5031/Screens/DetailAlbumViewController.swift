@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class DetailAlbumViewController : UITableViewController {
     var album: Album?
@@ -17,6 +18,13 @@ class DetailAlbumViewController : UITableViewController {
     @IBOutlet weak var albumInfo: UILabel!
     @IBOutlet weak var albumReleaseYear: UILabel!
     @IBOutlet weak var artistName: UILabel!
+    
+    /* CoreData */
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var context: NSManagedObjectContext? = nil
+    var favoriteTracksEntity: NSEntityDescription? = nil
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,7 +93,6 @@ class DetailAlbumViewController : UITableViewController {
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackTableViewCell
         cell.trackName.text = self.tracks[indexPath.row].strTrack
-        
         cell.trackDuration.text = cell.convertToTimestamp(time: Int(self.tracks[indexPath.row].intDuration)!)
         return cell
     }
