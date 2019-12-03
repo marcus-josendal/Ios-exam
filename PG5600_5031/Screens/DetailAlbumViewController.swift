@@ -11,8 +11,8 @@ import UIKit
 import CoreData
 
 class DetailAlbumViewController : UITableViewController {
-    var album: Album?
-    var tracks = [Track]()
+
+    /* UI */
     @IBOutlet var tracksTable: UITableView!
     @IBOutlet weak var albumCover: UIImageView!
     @IBOutlet weak var albumInfo: UILabel!
@@ -24,11 +24,19 @@ class DetailAlbumViewController : UITableViewController {
     var context: NSManagedObjectContext? = nil
     var favoriteTracksEntity: NSEntityDescription? = nil
     
-    
+    /* Other Fields */
+    var album: Album?
+    var tracks = [Track]()
+    var favoriteTracks = [FavoriteTrack]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.context = appDelegate.persistentContainer.viewContext
+        self.favoriteTracksEntity = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
+        
         // Fetch data related to album
+        getFavoriteTracks()
         fetchTracks { (res) in
             switch res {
             case .success(let tracks):
@@ -44,6 +52,11 @@ class DetailAlbumViewController : UITableViewController {
         self.albumCover.image = UIImage(named: "album-placeholder")
         self.albumInfo?.text = album?.strAlbum
         self.albumReleaseYear?.text = "\(album?.intYearReleased as! String) - \(album?.strArtist as! String)"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        getFavoriteTracks()
+        self.tracksTable.reloadData()
     }
     
     fileprivate func fetchTracks(completion: @escaping (Result<[Track], Error>) -> ()) {
@@ -65,6 +78,17 @@ class DetailAlbumViewController : UITableViewController {
         }.resume()
     }
     
+    func getFavoriteTracks() {
+        let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequest()
+        do {
+            favoriteTracks = try (context?.fetch(fetchRequest))!
+        } catch let nsError as NSError {
+            print("Could not fetch: \(nsError)")
+        } catch {
+            print("Something else went wrong")
+        }
+    }
+    
     func fetchAlbumCoverImage() {
         if let url = URL(string: (self.album!.strAlbumThumb ?? "")) {
             DispatchQueue.global().async {
@@ -78,11 +102,6 @@ class DetailAlbumViewController : UITableViewController {
         }
     }
     
-    /* METHODS FOR TRACKS TABLE VIEW BELOW */
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tracks.count
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row == 0) {
             let firstCell = tableView.dequeueReusableCell(withIdentifier: "trackHeadlineCell", for: indexPath)
@@ -92,8 +111,16 @@ class DetailAlbumViewController : UITableViewController {
             return firstCell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackTableViewCell
-        cell.trackName.text = self.tracks[indexPath.row].strTrack
-        cell.trackDuration.text = cell.convertToTimestamp(time: Int(self.tracks[indexPath.row].intDuration)!)
+        let trackData = self.tracks[indexPath.row]
+        cell.trackId = trackData.idTrack
+        cell.artistName = trackData.strArtist
+        cell.trackName.text = trackData.strTrack
+        cell.trackDuration.text = cell.convertToTimestamp(time: Int(trackData.intDuration)!)
+        cell.isFavorite = self.favoriteTracks.contains(where: { $0.trackName == trackData.strTrack })
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.tracks.count
     }
 }

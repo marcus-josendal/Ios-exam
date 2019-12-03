@@ -44,10 +44,13 @@ class FavoritesViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
+            
             context?.delete(favoriteTracks[indexPath.row])
+            favoriteTracks.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
             do {
                 try context?.save()
-                getFavoriteTracks()
             } catch let nsError as NSError {
                 print("Could not delete: \(nsError)")
             }

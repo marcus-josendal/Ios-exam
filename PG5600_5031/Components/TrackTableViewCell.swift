@@ -21,73 +21,91 @@ class TrackTableViewCell : UITableViewCell {
     let nonFilledStar = UIImage(named: "icons8-star")?.withRenderingMode(.alwaysTemplate)
     let tintedFilledStar = UIImage(named: "icons8-star_filled")?.withRenderingMode(.alwaysTemplate)
     var isFavorite: Bool = false
+    var artistName: String?
+    var trackId: String?
     
     /* CoreData */
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var context: NSManagedObjectContext? = nil
-    var favoriteTracks: NSEntityDescription? = nil
+    var favoriteTracksEntity: NSEntityDescription? = nil
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.context = appDelegate.persistentContainer.viewContext
-        self.favoriteTracks = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
+        self.favoriteTracksEntity = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
         
-        
-        styleIconImage()
-        checkIfFavorite()
-        self.isFavorite = true
-        starButton.tintColor = UIColor(named: "custom_gold")
+        styleStarImage()
     }
     
-    func styleIconImage() {
+    override func layoutSubviews() {
+        setFavoriteImage(isFavorite: self.isFavorite)
+    }
+    
+    func styleStarImage() {
         starButton.addTarget(self, action: #selector(addFavorite), for: .touchUpInside)
+        starButton.tintColor = UIColor(named: "custom_gold")
         starButton.setImage(nonFilledStar, for: .normal)
         starButton.setTitle(nil, for: .normal)
     }
     
-    func checkIfFavorite() {
-        // self.isSelected = true
-    }
-    
-    @objc func addFavorite(_ sender: UIButton) {
-        let favoriteTrack = FavoriteTrack(context: self.context!)
-        favoriteTrack.duration = trackDuration?.text
-        favoriteTrack.trackName = trackName?.text
-        favoriteTrack.duration = "(04:50)"
-        favoriteTrack.orderId = 0
-        favoriteTrack.trackId = "87233287"
-        
-        do {
-            try context?.save()
-        } catch let error as NSError {
-            print(error)
-        }
-        
-        let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequest()
-        var rows: [FavoriteTrack] = []
-        do {
-            rows = try (context?.fetch(fetchRequest))!
-        } catch {
-            print("error")
-        }
-        
-        rows.forEach {row in
-            print(row.trackName)
-        }
-        
-        
-        self.isFavorite = !self.isFavorite
-        if(self.isFavorite) {
+    func setFavoriteImage(isFavorite: Bool) {
+        if(isFavorite) {
             starButton.setImage(self.tintedFilledStar, for: .normal)
         } else {
             starButton.setImage(self.nonFilledStar, for: .normal)
         }
     }
     
-    func setFavoriteImage() {
+    @objc func addFavorite(_ sender: UIButton) {
         
+        if(!isFavorite) {
+            setAsFavorite()
+        } else {
+            deleteFavorite()
+        }
+        
+        isFavorite = !isFavorite
+        setFavoriteImage(isFavorite: isFavorite)
     }
+    
+    func deleteFavorite() {
+        let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequestSingle(trackId: self.trackId!)
+        var trackToBeDeleted: FavoriteTrack?
+        
+        do {
+            trackToBeDeleted = try (context?.fetch(fetchRequest))!.first
+        } catch let nsError as NSError {
+            print("Could not fetch: \(nsError)")
+        } catch {
+            print("Something else went wrong")
+        }
+        
+        self.context?.delete(trackToBeDeleted!)
+        
+        do {
+            try context?.save()
+        } catch let nsError as NSError {
+            print("Could not delete: \(nsError)")
+        }
+
+    }
+    
+    func setAsFavorite() {
+        let favoriteTrack = FavoriteTrack(context: self.context!)
+        favoriteTrack.duration = trackDuration?.text
+        favoriteTrack.trackName = trackName?.text
+        favoriteTrack.orderId = 0
+        favoriteTrack.trackId = trackId
+        favoriteTrack.artistName = artistName
+        
+        do {
+            try context?.save()
+            setFavoriteImage(isFavorite: self.isFavorite)
+        } catch let error as NSError {
+            print(error)
+        }
+    }
+    
     
     func convertToTimestamp(time: Int) -> String {
         let time = (minutes: (time / 1000) % 60, seconds: ((time / 1000) % 3600) / 60)

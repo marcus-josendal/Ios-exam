@@ -16,6 +16,12 @@ extension FavoriteTrack {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<FavoriteTrack> {
         return NSFetchRequest<FavoriteTrack>(entityName: "FavoriteTrack")
     }
+    
+    @nonobjc public class func fetchRequestSingle(trackId: String) -> NSFetchRequest<FavoriteTrack> {
+        let request = NSFetchRequest<FavoriteTrack>(entityName: "FavoriteTrack")
+        request.predicate = NSPredicate(format: "trackId == %@", trackId)
+        return request
+    }
 
     @NSManaged public var trackId: String?
     @NSManaged public var artistName: String?
