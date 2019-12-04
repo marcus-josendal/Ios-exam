@@ -16,6 +16,7 @@ class FavoritesViewController : UITableViewController {
     var context: NSManagedObjectContext? = nil
     var favoriteTracksEntity: NSEntityDescription? = nil
     var favoriteTracks = [FavoriteTrack]()
+    var recommendations: [Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ class FavoritesViewController : UITableViewController {
     }
     
     func getFavoriteTracks() {
+        print("Getting")
         let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequest()
         do {
             favoriteTracks = try (context?.fetch(fetchRequest))!
@@ -47,6 +49,43 @@ class FavoritesViewController : UITableViewController {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+        
+        updateRecommendations()
+    }
+    
+    func updateRecommendations() {
+        getRecommendationsData { (res) in
+            switch res {
+            case .success(let recommendations):
+                self.recommendations = recommendations.Similar.Results.map{ recommendation in recommendation.Name }
+            case .failure(let err):
+                print("Failed to fetch albums", err)
+            }
+        }
+    }
+    
+    fileprivate func getRecommendationsData(completion: @escaping (Result<TasteDiveResponse, Error>) -> ()) {
+        
+        let artistsFromTracks = Set(favoriteTracks.map{ track in
+            return track.artistName?.replacingOccurrences(of: " ", with: "+").lowercased()
+        })
+        
+        let artistParams = Array(artistsFromTracks).compactMap{ $0 }.joined(separator: ",")
+        let urlString = "https://tastedive.com/api/similar?q=\(artistParams)&type=music&k=350751-MusicApp-YGW1T8WB"
+        
+        guard let url = URL(string: urlString) else { return }
+            print(url)
+        
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+            if let err = err { completion(.failure(err)) }
+            
+            do {
+                let recommendations = try JSONDecoder().decode(TasteDiveResponse.self, from: data!)
+                completion(.success(recommendations))
+            } catch let jsonError {
+                completion(.failure(jsonError))
+            }
+        }.resume()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -71,9 +110,17 @@ class FavoritesViewController : UITableViewController {
         return true
     }
     
+    @IBAction func toggleEdit(_ sender: UIBarButtonItem) {
+        tableView.isEditing = !tableView.isEditing
+        sender.title = tableView.isEditing ? "Done" : "Edit"
+    }
+    
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print(sourceIndexPath)
-        print(destinationIndexPath)
+        updateTrack(start: sourceIndexPath.row, end: destinationIndexPath.row)
+    }
+    
+    func updateTrack(start: Int, end: Int) {
+        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
