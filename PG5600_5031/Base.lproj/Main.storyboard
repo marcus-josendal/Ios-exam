@@ -101,7 +101,7 @@
             </objects>
             <point key="canvasLocation" x="-1265" y="59"/>
         </scene>
-        <!--Favorites View Controller-->
+        <!--Title-->
         <scene sceneID="d8L-Iv-hYn">
             <objects>
                 <tableViewController id="fuA-YA-FTt" customClass="FavoritesViewController" customModule="PG5600_5031" customModuleProvider="target" sceneMemberID="viewController">
@@ -124,11 +124,17 @@
                             <outlet property="delegate" destination="fuA-YA-FTt" id="Ltl-NZ-Mvd"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="3qf-sD-ONu"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Title" id="l2l-JG-0zP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="PSf-q1-i1N">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mnZ-cJ-sI8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-306" y="59"/>
+            <point key="canvasLocation" x="-301" y="773"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="c9e-bO-E7Z">
@@ -141,7 +147,7 @@
                     <connections>
                         <segue destination="kdm-89-CoL" kind="relationship" relationship="viewControllers" id="Vg8-eM-yJV"/>
                         <segue destination="Hyi-lX-SOr" kind="relationship" relationship="viewControllers" id="qFK-Yy-ACu"/>
-                        <segue destination="fuA-YA-FTt" kind="relationship" relationship="viewControllers" id="zg5-pV-K3s"/>
+                        <segue destination="bZG-bG-I32" kind="relationship" relationship="viewControllers" id="0OL-wi-rCW"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZ1-Ha-KPn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -400,6 +406,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXI-3v-i2g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2214" y="790"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1ZG-5c-cLb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bZG-bG-I32" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="3qf-sD-ONu"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tHa-bq-8XS">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fuA-YA-FTt" kind="relationship" relationship="rootViewController" id="BTn-4N-rqO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NXd-Rd-IyZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-301.44927536231887" y="58.928571428571423"/>
         </scene>
     </scenes>
     <resources>

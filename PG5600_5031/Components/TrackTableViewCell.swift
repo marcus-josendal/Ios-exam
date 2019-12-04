@@ -24,6 +24,7 @@ class TrackTableViewCell : UITableViewCell {
     var artistName: String?
     var trackId: String?
     var orderId: Int32?
+    var onStaredChanged: (() -> Void)?
     
     /* CoreData */
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -65,6 +66,7 @@ class TrackTableViewCell : UITableViewCell {
             deleteFavorite()
         }
         
+        onStaredChanged?()
         isFavorite = !isFavorite
         setFavoriteImage(isFavorite: isFavorite)
     }

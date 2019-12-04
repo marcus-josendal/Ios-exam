@@ -35,7 +35,6 @@ class DetailAlbumViewController : UITableViewController {
         self.context = appDelegate.persistentContainer.viewContext
         self.favoriteTracksEntity = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
         
-        // Fetch data related to album
         getFavoriteTracks()
         fetchTracks { (res) in
             switch res {
@@ -51,7 +50,7 @@ class DetailAlbumViewController : UITableViewController {
         }
         self.albumCover.image = UIImage(named: "album-placeholder")
         self.albumInfo?.text = album?.strAlbum
-        self.albumReleaseYear?.text = "\(album?.intYearReleased as! String) - \(album?.strArtist as! String)"
+        self.albumReleaseYear?.text = "\(album!.intYearReleased) - \(album!.strArtist)"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,7 +62,6 @@ class DetailAlbumViewController : UITableViewController {
         let urlString = "https://theaudiodb.com/api/v1/json/1/track.php?m=" + album!.idAlbum
         guard let url = URL(string: urlString) else { return }
         
-        // Fetches album-JSON data
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             if let err = err {
                 completion(.failure(err))
@@ -118,6 +116,10 @@ class DetailAlbumViewController : UITableViewController {
         cell.trackName.text = trackData.strTrack
         cell.trackDuration.text = cell.convertToTimestamp(time: Int(trackData.intDuration)!)
         cell.isFavorite = self.favoriteTracks.contains(where: { $0.trackName == trackData.strTrack })
+        cell.onStaredChanged = {
+            self.getFavoriteTracks()
+            self.tracksTable.reloadData()
+        }
         return cell
     }
     

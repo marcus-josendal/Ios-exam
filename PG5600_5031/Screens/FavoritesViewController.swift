@@ -19,8 +19,15 @@ class FavoritesViewController : UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // NavigationController styling
+        navigationItem.title = "Favorite Tracks"
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.barTintColor = UIColor(named: "lightBlack")
+        
         self.context = appDelegate.persistentContainer.viewContext
         self.favoriteTracksEntity = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
+        self.tableView.dragInteractionEnabled = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,7 +51,6 @@ class FavoritesViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
-            
             context?.delete(favoriteTracks[indexPath.row])
             favoriteTracks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -61,14 +67,18 @@ class FavoritesViewController : UITableViewController {
         return favoriteTracks.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = self.favoriteTracks[indexPath.row].trackName
-        return cell
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print(sourceIndexPath)
+        print(destinationIndexPath)
+    }
     
-    
-    
-    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = String("\(self.favoriteTracks[indexPath.row].orderId) - \(self.favoriteTracks[indexPath.row].trackName)")
+        return cell
+    }
 }

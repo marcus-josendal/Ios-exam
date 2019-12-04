@@ -70,12 +70,6 @@ class Top50ViewController : UITableViewController {
         DispatchQueue.main.async { self.tableView.reloadData() }
     }
     
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return albums.count
-    }
-    
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellData = self.albums[indexPath.row]
         if(!alternateCellView) {
@@ -89,6 +83,7 @@ class Top50ViewController : UITableViewController {
                 options: [.transition(.fade(0.5))],
                 progressBlock: nil
             )
+            
             return cell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "alternateAlbumCell", for: indexPath) as? AlternateAlbumTableViewCell
@@ -96,6 +91,10 @@ class Top50ViewController : UITableViewController {
             cell?.artistName.text = cellData.strArtist
             return cell!
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return albums.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
