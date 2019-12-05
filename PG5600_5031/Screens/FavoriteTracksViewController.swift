@@ -89,8 +89,50 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
          sender.title = favoriteTracksTableView.isEditing ? "Done" : "Edit"
     }
     
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        updateTrack(start: sourceIndexPath.row, end: destinationIndexPath.row)
+    func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+        let start = fromIndexPath.row
+        let end = to.row
+        
+        let moveItem = favoriteTracks[start]
+        favoriteTracks.remove(at: start)
+        favoriteTracks.insert(moveItem, at: end)
+        func reOrder (startIndex: Int, endIndex: Int) -> Void  {
+            for index in stride(from: startIndex, through: endIndex, by: 1) {
+                favoriteTracks[index].orderId = Int32(index)
+                updateTrackOrderId(track: favoriteTracks[index])
+            }
+        }
+        
+        moveItem.orderId = Int32(end)
+        updateTrackOrderId(track: moveItem)
+        
+        if(start > end) {
+            reOrder(startIndex: end + 1, endIndex: start)
+        }
+        
+        if(start < end) {
+            reOrder(startIndex: start, endIndex: end - 1)
+        }
+    }
+    
+    func updateTrackOrderId(track: FavoriteTrack) {
+        
+        let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequestSingle(trackId: track.trackId!)
+
+        do {
+            let favorites = try context!.fetch(fetchRequest)
+            let objectToUpdate: NSManagedObject = favorites.first!
+            objectToUpdate.setValue(track.orderId, forKey: "orderId")
+            do{
+                try context!.save()
+            }
+            catch let error as NSError {
+                print("Coult not update track: \(error)")
+            }
+        } catch let error as NSError {
+            print("Could not fetch track: \(error)")
+        }
+        
     }
     
     func updateTrack(start: Int, end: Int) {

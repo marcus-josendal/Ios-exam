@@ -14,7 +14,9 @@ import CoreData
 extension FavoriteTrack {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<FavoriteTrack> {
-        return NSFetchRequest<FavoriteTrack>(entityName: "FavoriteTrack")
+        let request = NSFetchRequest<FavoriteTrack>(entityName: "FavoriteTrack")
+        request.sortDescriptors = [NSSortDescriptor(key: "orderId", ascending: true)]
+        return request
     }
     
     @nonobjc public class func fetchRequestSingle(trackId: String) -> NSFetchRequest<FavoriteTrack> {
