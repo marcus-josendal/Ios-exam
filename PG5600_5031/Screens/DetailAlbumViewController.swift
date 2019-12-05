@@ -110,7 +110,7 @@ class DetailAlbumViewController : UITableViewController {
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackTableViewCell
         let trackData = tracks[indexPath.row]
-        cell.orderId = getOrderId()
+        cell.orderId = Int32(favoriteTracks.count)
         cell.trackId = trackData.idTrack
         cell.artistName = trackData.strArtist
         cell.trackName.text = trackData.strTrack
@@ -121,14 +121,6 @@ class DetailAlbumViewController : UITableViewController {
             self.tracksTable.reloadData()
         }
         return cell
-    }
-    
-    func getOrderId() -> Int32 {
-        if(self.favoriteTracks.count == 0) {
-            return 0
-        } else {
-            return self.favoriteTracks.map { track in track.orderId}.max()! + 1
-        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -54,7 +54,7 @@ class SearchAlbumViewController : UITableViewController, UISearchBarDelegate {
             } catch let jsonError {
                 completion(.failure(jsonError))
             }
-            }.resume()
+        }.resume()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

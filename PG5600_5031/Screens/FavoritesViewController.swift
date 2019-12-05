@@ -36,7 +36,6 @@ class FavoritesViewController : UITableViewController {
     }
     
     func getFavoriteTracks() {
-        print("Getting")
         let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequest()
         do {
             favoriteTracks = try (context?.fetch(fetchRequest))!

@@ -69,6 +69,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
             
             do {
                 try context?.save()
+                updateRecommendations()
             } catch let nsError as NSError {
                 print("Could not delete: \(nsError)")
             }
@@ -85,6 +86,36 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     func updateTrack(start: Int, end: Int) {
+        let lower = min(start, end)
+        let higher = max(start, end)
+        var tmpArray = Array(self.favoriteTracks)
+        let subject = tmpArray[start]
+        
+        tmpArray.insert(subject, at: end)
+        if (end < start) {
+            tmpArray.remove(at: start + 1)
+        } else {
+            tmpArray.remove(at: start)
+        }
+        
+        tmpArray.enumerated().forEach({ offset, element in
+            guard lower <= offset || offset >= higher else {
+                return
+            }
+            element.orderId = Int32(offset)
+        })
+        
+        print("tmpArray")
+        tmpArray.forEach{track in
+            print("\(track.trackName) -- \(track.orderId)")
+        }
+        
+        print("favoriteTracksArray")
+        favoriteTracks.forEach{track in
+            print("\(track.trackName) -- \(track.orderId)")
+        }
+        
+        
         favoriteTracksTableView.reloadData()
     }
     
@@ -97,9 +128,12 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = String("\(self.favoriteTracks[indexPath.row].orderId) - \(self.favoriteTracks[indexPath.row].trackName)")
-        return cell
+        let cell = favoriteTracksTableView.dequeueReusableCell(withIdentifier: "FavoriteTrackCell") as? FavoriteTableViewCell
+        let cellData = favoriteTracks[indexPath.row]
+        cell?.trackName.text = "\(cellData.trackName!) -- \(cellData.orderId)"
+        cell?.artistName.text = cellData.artistName
+        cell?.trackDuration.text = cellData.duration
+        return cell!
     }
     
     /* COLLECTION VIEW RELATED FUNCTIONALITY FOR SUGGESTIONS BELOW */
@@ -119,7 +153,6 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     fileprivate func getRecommendationsData(completion: @escaping (Result<TasteDiveResponse, Error>) -> ()) {
-        
         let artistsFromTracks = Set(favoriteTracks.map{ track in
             return track.artistName?.replacingOccurrences(of: " ", with: "+").lowercased()
         })
