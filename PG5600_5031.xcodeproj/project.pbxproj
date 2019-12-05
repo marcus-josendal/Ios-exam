@@ -27,6 +27,7 @@
 		2FA8136823982FA900BD3523 /* FavoriteTracksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA8136723982FA900BD3523 /* FavoriteTracksViewController.swift */; };
 		2FA8136A239847F600BD3523 /* SuggestionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA81369239847F600BD3523 /* SuggestionsCollectionViewCell.swift */; };
 		2FA8136C23991E3300BD3523 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA8136B23991E3300BD3523 /* FavoriteTableViewCell.swift */; };
+		2FA8136E23995ECC00BD3523 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA8136D23995ECC00BD3523 /* Time.swift */; };
 		2FC6C41F2353939E00BDE85A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C41E2353939E00BDE85A /* Track.swift */; };
 		2FC6C421235398EF00BDE85A /* TrackResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C420235398EF00BDE85A /* TrackResponse.swift */; };
 		2FC7D6F823607E2C00DA0FA8 /* DetailAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC7D6F723607E2C00DA0FA8 /* DetailAlbumViewController.swift */; };
@@ -70,6 +71,7 @@
 		2FA8136723982FA900BD3523 /* FavoriteTracksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTracksViewController.swift; sourceTree = "<group>"; };
 		2FA81369239847F600BD3523 /* SuggestionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA8136B23991E3300BD3523 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
+		2FA8136D23995ECC00BD3523 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		2FC6C41E2353939E00BDE85A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		2FC6C420235398EF00BDE85A /* TrackResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackResponse.swift; sourceTree = "<group>"; };
 		2FC7D6F723607E2C00DA0FA8 /* DetailAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAlbumViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				2F0E43382391522D00FC4E72 /* Debouncer.swift */,
+				2FA8136D23995ECC00BD3523 /* Time.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				2F8F2007234F6633000384A1 /* Loved.swift in Sources */,
 				2FC6C41F2353939E00BDE85A /* Track.swift in Sources */,
 				2FA8136C23991E3300BD3523 /* FavoriteTableViewCell.swift in Sources */,
+				2FA8136E23995ECC00BD3523 /* Time.swift in Sources */,
 				2FC7D6F823607E2C00DA0FA8 /* DetailAlbumViewController.swift in Sources */,
 				2FC7D6FA2360B61900DA0FA8 /* TrackTableViewCell.swift in Sources */,
 				2F8F1FDD234F2C21000384A1 /* AppDelegate.swift in Sources */,

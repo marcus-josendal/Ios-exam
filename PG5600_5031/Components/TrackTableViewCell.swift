@@ -33,6 +33,8 @@ class TrackTableViewCell : UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        /* Initialize CoreData */
         self.context = appDelegate.persistentContainer.viewContext
         self.favoriteTracksEntity = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
         
@@ -44,12 +46,13 @@ class TrackTableViewCell : UITableViewCell {
     }
     
     func styleStarImage() {
-        starButton.addTarget(self, action: #selector(addFavorite), for: .touchUpInside)
+        starButton.addTarget(self, action: #selector(changeStateForTrack), for: .touchUpInside)
         starButton.tintColor = UIColor(named: "custom_gold")
         starButton.setImage(nonFilledStar, for: .normal)
         starButton.setTitle(nil, for: .normal)
     }
     
+    /* Makes the star toggle between a filled png and a non-filled png */
     func setFavoriteImage(isFavorite: Bool) {
         if(isFavorite) {
             starButton.setImage(self.tintedFilledStar, for: .normal)
@@ -58,7 +61,8 @@ class TrackTableViewCell : UITableViewCell {
         }
     }
     
-    @objc func addFavorite(_ sender: UIButton) {
+    /* Based on what state the star-png is in either delete or add a new track to CoreData */
+    @objc func changeStateForTrack(_ sender: UIButton) {
         
         if(!isFavorite) {
             setAsFavorite()
@@ -71,6 +75,7 @@ class TrackTableViewCell : UITableViewCell {
         setFavoriteImage(isFavorite: isFavorite)
     }
     
+    /* Deletes an already persisted track */
     func deleteFavorite() {
         let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequestSingle(trackId: self.trackId!)
         var trackToBeDeleted: FavoriteTrack?
@@ -93,6 +98,7 @@ class TrackTableViewCell : UITableViewCell {
 
     }
     
+    /* Saves a track with the necessary information in CoreData */
     func setAsFavorite() {
         let favoriteTrack = FavoriteTrack(context: self.context!)
         favoriteTrack.duration = trackDuration?.text
@@ -107,22 +113,5 @@ class TrackTableViewCell : UITableViewCell {
         } catch let error as NSError {
             print(error)
         }
-    }
-    
-    
-    
-    func convertToTimestamp(time: Int) -> String {
-        let time = (minutes: (time / 1000) % 60, seconds: ((time / 1000) % 3600) / 60)
-        var seconds = String(time.seconds)
-        var minutes = String(time.minutes)
-        if(time.seconds < 10) {
-            seconds = "0" + seconds
-        }
-        
-        if(time.minutes < 10) {
-            minutes = "0" + minutes
-        }
-        
-        return "(\(seconds):\(minutes))"
     }
 }

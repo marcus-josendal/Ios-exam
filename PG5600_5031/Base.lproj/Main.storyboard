@@ -186,7 +186,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="ayP-Ud-DeG">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="437"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="452"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="443-7v-o7d">
@@ -225,7 +225,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="trackHeadlineCell" id="cpl-O7-x49">
-                                <rect key="frame" x="0.0" y="465" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="480" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cpl-O7-x49" id="FDC-vr-Ffv">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -234,7 +234,7 @@
                                 <color key="backgroundColor" name="lightBlack"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="trackCell" id="qCV-qo-eHw" customClass="TrackTableViewCell" customModule="PG5600_5031" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="509" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="524" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qCV-qo-eHw" id="7g4-m3-m6N">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -291,7 +291,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ja-i1-KYG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2214" y="1509"/>
+            <point key="canvasLocation" x="-2214.4927536231885" y="1508.7053571428571"/>
         </scene>
         <!--Top50 View Controller-->
         <scene sceneID="OkI-sP-7Aa">
@@ -316,7 +316,7 @@
                                                 <constraint firstAttribute="width" constant="123" id="xcX-kg-hgb"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cai-D2-GiO">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cai-D2-GiO">
                                             <rect key="frame" x="131" y="36" width="218" height="22"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

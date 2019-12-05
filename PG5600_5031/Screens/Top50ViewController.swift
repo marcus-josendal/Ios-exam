@@ -21,13 +21,13 @@ class Top50ViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // NavigationController styling
+        /* NavigationController styling */
         navigationItem.title = "Top 50 Albums"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.barTintColor = UIColor(named: "lightBlack")
 
         
-        // Fetch JSON and reload the tableview
+        /* Fetch JSON and reloads the tableview */
         fetchTopAlbums { (res) in
             switch res {
             case .success(let albums):
@@ -44,12 +44,14 @@ class Top50ViewController : UITableViewController {
         displaySwitch.setImage(UIImage(named: "icons8-list"), forSegmentAt: 1)
     }
     
-
+    /*
+        Fetches the top 50 albums returned from theaudiodb-API.
+        Returns a response in form of an array of Albums.
+    */
     fileprivate func fetchTopAlbums(completion: @escaping (Result<[Album], Error>) -> ()) {
         let urlString = "https://theaudiodb.com/api/v1/json/1/mostloved.php?format=album"
         guard let url = URL(string: urlString) else { return }
         
-        // Fetches album-JSON data
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             if let err = err {
                 completion(.failure(err))
@@ -64,12 +66,17 @@ class Top50ViewController : UITableViewController {
         }.resume()
     }
     
+    /* Toggles between image-rows and a alternate row type */
     @IBAction func displayChanged(_ sender: Any) {
         self.alternateCellView = !alternateCellView
         self.tableView.rowHeight = alternateCellView ? 50 : 100
         DispatchQueue.main.async { self.tableView.reloadData() }
     }
     
+    /*
+        If alternateCellView is not toggled return image-cell type.
+        If toggled return an alternate-cell type
+    */
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellData = self.albums[indexPath.row]
         if(!alternateCellView) {
@@ -97,6 +104,11 @@ class Top50ViewController : UITableViewController {
         return albums.count
     }
     
+    /*
+        Navigates to the detail view for the given album.
+        Sends with the album information so it is possible to limit
+        the number of requests made in the Detail Table View to 1.
+    */
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailAlbumViewController") as? DetailAlbumViewController
         vc?.album = self.albums[indexPath.row]

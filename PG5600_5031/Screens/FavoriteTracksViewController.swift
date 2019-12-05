@@ -23,15 +23,18 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /* Navigation Controller styling */
         navigationItem.title = "Favorite Tracks"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.barTintColor = UIColor(named: "lightBlack")
         
+        /* Sets delegates and datasources */
         favoriteTracksTableView.delegate = self
         favoriteTracksTableView.dataSource = self
         suggestionsCollectionView.delegate = self
         suggestionsCollectionView.dataSource = self
         
+        /* Initialize CoreData */
         self.context = appDelegate.persistentContainer.viewContext
         self.favoriteTracksEntity = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
         self.favoriteTracksTableView.dragInteractionEnabled = true
@@ -41,6 +44,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         getFavoriteTracks()
     }
     
+    /* Returns array of persisted tracks that the user has favorited */
     func getFavoriteTracks() {
         let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequest()
         do {
@@ -58,9 +62,12 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         updateRecommendations()
     }
     
-    
     /* TABLE VIEW RELATED FUNCTIONALITY FOR FAVORITE TRACKS BELOW */
     
+    /*
+        In addition to delete cells in "edit"-mode this enables swipe delete when not in edit mode.
+        Result of deletion is persisted in database.
+    */
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             context?.delete(favoriteTracks[indexPath.row])
@@ -76,6 +83,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         }
     }
     
+    /* Enabled or disables editing mode in Tableview based on editButton state */
     @IBAction func editButton(_ sender: UIBarButtonItem) {
         favoriteTracksTableView.isEditing = !favoriteTracksTableView.isEditing
          sender.title = favoriteTracksTableView.isEditing ? "Done" : "Edit"
@@ -119,14 +127,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         favoriteTracksTableView.reloadData()
     }
     
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteTracks.count
-    }
-    
+    /* Returns a cell with track data from persisted favorite tracks */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = favoriteTracksTableView.dequeueReusableCell(withIdentifier: "FavoriteTrackCell") as? FavoriteTableViewCell
         let cellData = favoriteTracks[indexPath.row]
@@ -136,8 +137,17 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         return cell!
     }
     
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return favoriteTracks.count
+    }
+    
     /* COLLECTION VIEW RELATED FUNCTIONALITY FOR SUGGESTIONS BELOW */
     
+    /* When recommendations data is fetched update the recomendations field */
     func updateRecommendations() {
         getRecommendationsData { (res) in
             switch res {
@@ -152,6 +162,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         }
     }
     
+    /* Fetches recommendations data from the TasteDive-API based on the artists in the favoriteTracks field */
     fileprivate func getRecommendationsData(completion: @escaping (Result<TasteDiveResponse, Error>) -> ()) {
         let artistsFromTracks = Set(favoriteTracks.map{ track in
             return track.artistName?.replacingOccurrences(of: " ", with: "+").lowercased()
@@ -175,13 +186,14 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         }.resume()
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recommendations.count
-    }
-    
+    /* Returns a CollectionViewCell with name of artist in the recommendations field */
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = suggestionsCollectionView.dequeueReusableCell(withReuseIdentifier: "suggestionCell", for: indexPath) as? SuggestionsCollectionViewCell
         cell?.artistName.text = recommendations[indexPath.row]
         return cell!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return recommendations.count
     }
 }

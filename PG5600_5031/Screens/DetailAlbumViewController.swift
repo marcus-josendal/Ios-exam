@@ -35,6 +35,7 @@ class DetailAlbumViewController : UITableViewController {
         self.context = appDelegate.persistentContainer.viewContext
         self.favoriteTracksEntity = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
         
+        /* Fetches persisted favorite tracks and tracks for given album */
         getFavoriteTracks()
         fetchTracks { (res) in
             switch res {
@@ -48,6 +49,8 @@ class DetailAlbumViewController : UITableViewController {
                 print("Failed to fetch tracks", err)
             }
         }
+        
+        /* Sets data sent from the top 50 table view controller */
         self.albumCover.image = UIImage(named: "album-placeholder")
         self.albumInfo?.text = album?.strAlbum
         self.albumReleaseYear?.text = "\(album!.intYearReleased) - \(album!.strArtist)"
@@ -58,6 +61,11 @@ class DetailAlbumViewController : UITableViewController {
         tracksTable.reloadData()
     }
     
+    
+    /*
+        Fetches tracks where album-id matches the one sent from the top 50 view controller
+        Returns a response in form of an array of Tracks.
+    */
     fileprivate func fetchTracks(completion: @escaping (Result<[Track], Error>) -> ()) {
         let urlString = "https://theaudiodb.com/api/v1/json/1/track.php?m=" + album!.idAlbum
         guard let url = URL(string: urlString) else { return }
@@ -76,6 +84,7 @@ class DetailAlbumViewController : UITableViewController {
         }.resume()
     }
     
+    /* Fetches persisted tracks and sets them to the favoriteTracks field */
     func getFavoriteTracks() {
         let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequest()
         do {
@@ -87,6 +96,7 @@ class DetailAlbumViewController : UITableViewController {
         }
     }
     
+    /* Fetches image-data for the album-cover and sets data to field albumCover */
     func fetchAlbumCoverImage() {
         if let url = URL(string: (self.album!.strAlbumThumb!)) {
             DispatchQueue.global().async {
@@ -100,6 +110,11 @@ class DetailAlbumViewController : UITableViewController {
         }
     }
     
+    /*
+        If it is the first row, style it to make it look like a headline.
+        If not send all the data necessary to the TrackTableViewCell to make
+        it possible to persist the tracks.
+    */
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row == 0) {
             let firstCell = tableView.dequeueReusableCell(withIdentifier: "trackHeadlineCell", for: indexPath)
@@ -114,7 +129,7 @@ class DetailAlbumViewController : UITableViewController {
         cell.trackId = trackData.idTrack
         cell.artistName = trackData.strArtist
         cell.trackName.text = trackData.strTrack
-        cell.trackDuration.text = cell.convertToTimestamp(time: Int(trackData.intDuration)!)
+        cell.trackDuration.text = Time().convertToTimestamp(time: Int(trackData.intDuration)!)
         cell.isFavorite = self.favoriteTracks.contains(where: { $0.trackName == trackData.strTrack })
         cell.onStaredChanged = {
             self.getFavoriteTracks()
