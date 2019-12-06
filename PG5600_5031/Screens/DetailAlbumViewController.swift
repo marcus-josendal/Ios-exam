@@ -32,6 +32,7 @@ class DetailAlbumViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /* Initialize Core Data */
         self.context = appDelegate.persistentContainer.viewContext
         self.favoriteTracksEntity = NSEntityDescription.entity(forEntityName: "FavoriteTrack", in: context!)
         
@@ -60,7 +61,6 @@ class DetailAlbumViewController : UITableViewController {
         getFavoriteTracks()
         tracksTable.reloadData()
     }
-    
     
     /*
         Fetches tracks where album-id matches the one sent from the top 50 view controller
@@ -98,6 +98,7 @@ class DetailAlbumViewController : UITableViewController {
     
     /* Fetches image-data for the album-cover and sets data to field albumCover */
     func fetchAlbumCoverImage() {
+        if(self.album!.strAlbumThumb != nil) {
         if let url = URL(string: (self.album!.strAlbumThumb!)) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url)
@@ -108,7 +109,7 @@ class DetailAlbumViewController : UITableViewController {
                 }
             }
         }
-    }
+        }}
     
     /*
         If it is the first row, style it to make it look like a headline.
@@ -136,6 +137,14 @@ class DetailAlbumViewController : UITableViewController {
             self.tracksTable.reloadData()
         }
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if(indexPath.row == 0) {
+            return 40
+        } else {
+            return 60
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

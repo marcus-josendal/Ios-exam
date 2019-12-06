@@ -17,6 +17,6 @@ struct Similar: Codable {
     let Info: [SingleResult]
 }
 
-struct TasteDiveResponse: Codable {
+struct Recommendations: Codable {
     let Similar: Similar
 }

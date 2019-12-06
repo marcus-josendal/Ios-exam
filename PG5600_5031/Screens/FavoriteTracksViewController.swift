@@ -69,16 +69,29 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
     */
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
-            context?.delete(favoriteTracks[indexPath.row])
-            favoriteTracks.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
             
-            do {
-                try context?.save()
-                updateRecommendations()
-            } catch let nsError as NSError {
-                print("Could not delete: \(nsError)")
+            let alertController = UIAlertController(title: "Delete Track", message: "Are you sure you want to delete this track?", preferredStyle: .alert)
+            
+            let deleteTrackAction = UIAlertAction(title: "Delete", style: .default) { (action:UIAlertAction!) in
+                self.context?.delete(self.favoriteTracks[indexPath.row])
+                self.favoriteTracks.remove(at: indexPath.row)
+                self.favoriteTracksTableView.deleteRows(at: [indexPath], with: .fade)
+                
+                do {
+                    try self.context?.save()
+                    self.updateRecommendations()
+                } catch let nsError as NSError {
+                    print("Could not delete: \(nsError)")
+                }
             }
+            
+            let cancelDeletionAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction!) in
+                return
+            }
+            
+            alertController.addAction(deleteTrackAction)
+            alertController.addAction(cancelDeletionAction)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -133,15 +146,16 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         } catch let error as NSError {
             print("Could not fetch track: \(error)")
         }
-        
     }
+    
+    
     
     
     /* Returns a cell with track data from persisted favorite tracks */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = favoriteTracksTableView.dequeueReusableCell(withIdentifier: "FavoriteTrackCell") as? FavoriteTableViewCell
         let cellData = favoriteTracks[indexPath.row]
-        cell?.trackName.text = "\(cellData.trackName!) -- \(cellData.orderId)"
+        cell?.trackName.text = cellData.trackName
         cell?.artistName.text = cellData.artistName
         cell?.trackDuration.text = cellData.duration
         return cell!
@@ -162,7 +176,6 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         getRecommendationsData { (res) in
             switch res {
             case .success(let recommendations):
-                print(recommendations)
                 self.recommendations = recommendations.Similar.Results.map{ recommendation in recommendation.Name }
                 DispatchQueue.main.async {
                     self.suggestionsCollectionView.reloadData()
@@ -174,7 +187,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     /* Fetches recommendations data from the TasteDive-API based on the artists in the favoriteTracks field */
-    fileprivate func getRecommendationsData(completion: @escaping (Result<TasteDiveResponse, Error>) -> ()) {
+    fileprivate func getRecommendationsData(completion: @escaping (Result<Recommendations, Error>) -> ()) {
         let artistsFromTracks = Set(favoriteTracks.map{ track in
             return track.artistName?.replacingOccurrences(of: " ", with: "+").lowercased()
         })
@@ -184,13 +197,12 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
             let urlString = "https://tastedive.com/api/similar?q=\(artistParams)&type=music&k=350751-MusicApp-YGW1T8WB"
             
             guard let url = URL(string: urlString) else { return }
-            print(url)
             
             URLSession.shared.dataTask(with: url) { (data, response, err) in
                 if let err = err { completion(.failure(err)) }
                 
                 do {
-                    let recommendations = try JSONDecoder().decode(TasteDiveResponse.self, from: data!)
+                    let recommendations = try JSONDecoder().decode(Recommendations.self, from: data!)
                     completion(.success(recommendations))
                 } catch let jsonError {
                     completion(.failure(jsonError))

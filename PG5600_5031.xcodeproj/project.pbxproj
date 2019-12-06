@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2F0E433423901B1A00FC4E72 /* SearchAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E433323901B1A00FC4E72 /* SearchAlbumViewController.swift */; };
 		2F0E433623913EFD00FC4E72 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E433523913EFD00FC4E72 /* SearchResponse.swift */; };
-		2F0E43392391522D00FC4E72 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E43382391522D00FC4E72 /* Debouncer.swift */; };
 		2F0E433B23916EEA00FC4E72 /* AlternateAlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0E433A23916EEA00FC4E72 /* AlternateAlbumTableViewCell.swift */; };
 		2F8F1FDD234F2C21000384A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F1FDC234F2C21000384A1 /* AppDelegate.swift */; };
 		2F8F1FE2234F2C21000384A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F8F1FE0234F2C21000384A1 /* Main.storyboard */; };
@@ -49,7 +48,6 @@
 /* Begin PBXFileReference section */
 		2F0E433323901B1A00FC4E72 /* SearchAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAlbumViewController.swift; sourceTree = "<group>"; };
 		2F0E433523913EFD00FC4E72 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
-		2F0E43382391522D00FC4E72 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		2F0E433A23916EEA00FC4E72 /* AlternateAlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateAlbumTableViewCell.swift; sourceTree = "<group>"; };
 		2F8F1FD9234F2C21000384A1 /* PG5600_5031.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PG5600_5031.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8F1FDC234F2C21000384A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 		2F0E4337239151FD00FC4E72 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				2F0E43382391522D00FC4E72 /* Debouncer.swift */,
 				2FA8136D23995ECC00BD3523 /* Time.swift */,
 			);
 			path = Utils;
@@ -391,7 +388,6 @@
 				2F0E433623913EFD00FC4E72 /* SearchResponse.swift in Sources */,
 				2F8F200D23521B84000384A1 /* AlbumTableViewCell.swift in Sources */,
 				2FA81361239574AC00BD3523 /* FavoriteTrack+CoreDataClass.swift in Sources */,
-				2F0E43392391522D00FC4E72 /* Debouncer.swift in Sources */,
 				2F8F1FE5234F2C21000384A1 /* PG5600_5031.xcdatamodeld in Sources */,
 				2F0E433B23916EEA00FC4E72 /* AlternateAlbumTableViewCell.swift in Sources */,
 				2F8F2005234F6362000384A1 /* Album.swift in Sources */,

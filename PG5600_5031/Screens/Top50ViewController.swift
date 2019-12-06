@@ -40,6 +40,7 @@ class Top50ViewController : UITableViewController {
             }
         }
         
+        /* Sets icons for the toggle-controller in the right corner */
         displaySwitch.setImage(UIImage(named: "icons8-list_2"), forSegmentAt: 0)
         displaySwitch.setImage(UIImage(named: "icons8-list"), forSegmentAt: 1)
     }
