@@ -102,44 +102,6 @@
             </objects>
             <point key="canvasLocation" x="-1265" y="59"/>
         </scene>
-        <!--Title-->
-        <scene sceneID="d8L-Iv-hYn">
-            <objects>
-                <tableViewController id="fuA-YA-FTt" customClass="FavoritesViewController" customModule="PG5600_5031" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="MWB-Ok-wWQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bgA-db-6D8">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bgA-db-6D8" id="LC1-wR-sz3">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="fuA-YA-FTt" id="DgO-fm-4zO"/>
-                            <outlet property="delegate" destination="fuA-YA-FTt" id="Ltl-NZ-Mvd"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Title" id="l2l-JG-0zP">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="PSf-q1-i1N">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="toggleEdit:" destination="fuA-YA-FTt" id="bd2-A4-rv1"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mnZ-cJ-sI8" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-301" y="773"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="c9e-bO-E7Z">
             <objects>
@@ -540,7 +502,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDd-fD-hbV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1642.0289855072465" y="-58.258928571428569"/>
+            <point key="canvasLocation" x="-288" y="790"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kKB-QW-96w">
@@ -559,7 +521,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h4X-TF-5Ag" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="659" y="-204"/>
+            <point key="canvasLocation" x="-287" y="59"/>
         </scene>
     </scenes>
     <resources>

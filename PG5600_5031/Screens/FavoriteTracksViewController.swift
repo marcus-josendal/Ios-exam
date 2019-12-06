@@ -42,6 +42,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
     
     override func viewDidAppear(_ animated: Bool) {
         getFavoriteTracks()
+        updateRecommendations()
     }
     
     /* Returns array of persisted tracks that the user has favorited */
@@ -58,8 +59,6 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         DispatchQueue.main.async {
             self.favoriteTracksTableView.reloadData()
         }
-        
-        updateRecommendations()
     }
     
     /* TABLE VIEW RELATED FUNCTIONALITY FOR FAVORITE TRACKS BELOW */
@@ -89,6 +88,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
          sender.title = favoriteTracksTableView.isEditing ? "Done" : "Edit"
     }
     
+    /* Re-orders the lists of tracks based on how the cell is moved */
     func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         let start = fromIndexPath.row
         let end = to.row
@@ -115,6 +115,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         }
     }
     
+    /* Updates the OrderId for the track where the trackId equals input track id */
     func updateTrackOrderId(track: FavoriteTrack) {
         
         let fetchRequest: NSFetchRequest<FavoriteTrack> = FavoriteTrack.fetchRequestSingle(trackId: track.trackId!)
@@ -135,39 +136,6 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         
     }
     
-    func updateTrack(start: Int, end: Int) {
-        let lower = min(start, end)
-        let higher = max(start, end)
-        var tmpArray = Array(self.favoriteTracks)
-        let subject = tmpArray[start]
-        
-        tmpArray.insert(subject, at: end)
-        if (end < start) {
-            tmpArray.remove(at: start + 1)
-        } else {
-            tmpArray.remove(at: start)
-        }
-        
-        tmpArray.enumerated().forEach({ offset, element in
-            guard lower <= offset || offset >= higher else {
-                return
-            }
-            element.orderId = Int32(offset)
-        })
-        
-        print("tmpArray")
-        tmpArray.forEach{track in
-            print("\(track.trackName) -- \(track.orderId)")
-        }
-        
-        print("favoriteTracksArray")
-        favoriteTracks.forEach{track in
-            print("\(track.trackName) -- \(track.orderId)")
-        }
-        
-        
-        favoriteTracksTableView.reloadData()
-    }
     
     /* Returns a cell with track data from persisted favorite tracks */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -194,6 +162,7 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
         getRecommendationsData { (res) in
             switch res {
             case .success(let recommendations):
+                print(recommendations)
                 self.recommendations = recommendations.Similar.Results.map{ recommendation in recommendation.Name }
                 DispatchQueue.main.async {
                     self.suggestionsCollectionView.reloadData()
@@ -210,22 +179,24 @@ class FavoriteTracksViewController : UIViewController, UITableViewDelegate, UITa
             return track.artistName?.replacingOccurrences(of: " ", with: "+").lowercased()
         })
         
-        let artistParams = Array(artistsFromTracks).compactMap{ $0 }.joined(separator: ",")
-        let urlString = "https://tastedive.com/api/similar?q=\(artistParams)&type=music&k=350751-MusicApp-YGW1T8WB"
-        
-        guard let url = URL(string: urlString) else { return }
-        print(url)
-        
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-            if let err = err { completion(.failure(err)) }
+        if(artistsFromTracks.count != 0) {
+            let artistParams = Array(artistsFromTracks).compactMap{ $0 }.joined(separator: ",")
+            let urlString = "https://tastedive.com/api/similar?q=\(artistParams)&type=music&k=350751-MusicApp-YGW1T8WB"
             
-            do {
-                let recommendations = try JSONDecoder().decode(TasteDiveResponse.self, from: data!)
-                completion(.success(recommendations))
-            } catch let jsonError {
-                completion(.failure(jsonError))
-            }
-        }.resume()
+            guard let url = URL(string: urlString) else { return }
+            print(url)
+            
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+                if let err = err { completion(.failure(err)) }
+                
+                do {
+                    let recommendations = try JSONDecoder().decode(TasteDiveResponse.self, from: data!)
+                    completion(.success(recommendations))
+                } catch let jsonError {
+                    completion(.failure(jsonError))
+                }
+            }.resume()
+        }
     }
     
     /* Returns a CollectionViewCell with name of artist in the recommendations field */
